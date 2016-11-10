@@ -34,7 +34,7 @@ void HandleClient(int client, sockaddr_in client_address, int port) {
     if (msg.substr(0, 4) == "HELO") {
       char ip[INET_ADDRSTRLEN];
       inet_ntop(AF_INET, &(client_address.sin_addr), ip, INET_ADDRSTRLEN);
-      string response = msg + "\nIP:" + string(ip) + "\nPort:" +
+      string response = msg + "IP:" + "10.62.0.156" + "\nPort:" +
         to_string(port) + "\nStudentID:12308914\n";
       send(client, response.c_str(), strlen(response.c_str()), 0);
     }
@@ -66,6 +66,10 @@ int main(int argc, char* argv[]) {
   server_address.sin_family = AF_INET;
   server_address.sin_addr.s_addr = INADDR_ANY;
   server_address.sin_port = htons(port);
+
+  char ip[INET_ADDRSTRLEN];
+  inet_ntop(AF_INET, &(server_address.sin_addr), ip, INET_ADDRSTRLEN);
+  cout << ip << endl;
 
   if (bind(sckt, (sockaddr*)&server_address, sizeof(server_address)) < 0) {
     cout << "Couldn't bind" << endl;
